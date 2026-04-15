@@ -112,49 +112,49 @@ sudo dmesg | tail -5   # verify "Module unloaded"
 
 ### Screenshot 1 — Multi-Container Supervision
 The supervisor is initialized, and the control socket is established at `/tmp/mini_runtime.sock`. Two containers, `alpha` (PID: 86242) and `beta` (PID: 86577), are successfully spawned and managed.
-![Screenshot 1](screenshots/s1.jpg)
+![Screenshot 1](screenshots/s1.png)
 
 ---
 
 ### Screenshot 2 — Metadata Tracking
 The `ps` command displays the internal state of the runtime. Both `alpha` and `beta` are tracked with their host PIDs and configured memory limits (40 MiB soft / 64 MiB hard).
-![Screenshot 2](screenshots/s2.jpg)
+![Screenshot 2](screenshots/s2.png)
 
 ---
 
 ### Screenshot 3 — Bounded-Buffer Logging
 A `logger` container (PID: 89705) runs a script emitting sequential lines. The `logs` command retrieves this data from the supervisor's producer-consumer pipeline without data loss.
-![Screenshot 3](screenshots/s3.jpg)
+![Screenshot 3](screenshots/s3.png)
 
 ---
 
 ### Screenshot 4 — CLI and IPC
 A `stop alpha` command is sent over the UNIX domain socket. The supervisor acknowledges the signal (`OK: sent SIGTERM`), and the process is successfully reaped.
-![Screenshot 4](screenshots/s4.jpg)
+![Screenshot 4](screenshots/s4.png)
 
 ---
 
 ### Screenshot 5 — Memory Limit Enforcement
 The kernel monitor detects memory pressure for container `hog1`. `dmesg` shows the **SOFT LIMIT** warning followed by a **HARD LIMIT** kill event once the physical RAM usage exceeds the 25 MiB threshold.
-![Screenshot 5](screenshots/s5.jpg)
+![Screenshot 5](screenshots/s5.png)
 
 ---
 
 ### Screenshot 6 — Scheduler Experiment
 `cpulow` (nice 10) and `cpuhigh` (nice -10) run the same workload. The logs confirm that `cpuhigh` accumulated a significantly higher value, demonstrating the CFS weight-based time allocation.
-![Screenshot 6](screenshots/s6.jpg)
+![Screenshot 6](screenshots/s6.png)
 
 ---
 
 ### Screenshot 7 — Kernel Module Cleanup
 Upon container exit, the kernel module handles the unregister requests as seen in the audit logs. This ensures no stale PID references remain in the monitor's tracking list.
-![Screenshot 7](screenshots/s7(1).jpg)
+![Screenshot 7](screenshots/s7(1).png)
 
 ---
 
 ### Screenshot 8 — Clean Teardown
 The final teardown sequence shows all containers stopped and the supervisor exiting cleanly. The `rmmod` command successfully removes the monitor after all containers are unregistered.
-![Screenshot 8](screenshots/s7(2).jpg)
+![Screenshot 8](screenshots/s7(2).png)
 
 ---
 
