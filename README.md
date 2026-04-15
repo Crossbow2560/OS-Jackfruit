@@ -148,13 +148,13 @@ The kernel monitor detects memory pressure for container `hog1`. `dmesg` shows t
 
 ### Screenshot 7 — Kernel Module Cleanup
 Upon container exit, the kernel module handles the unregister requests as seen in the audit logs. This ensures no stale PID references remain in the monitor's tracking list.
-![Screenshot 7](screenshots/s7(1).png)
+![Screenshot 7](screenshots/s7_1.png)
 
 ---
 
 ### Screenshot 8 — Clean Teardown
 The final teardown sequence shows all containers stopped and the supervisor exiting cleanly. The `rmmod` command successfully removes the monitor after all containers are unregistered.
-![Screenshot 8](screenshots/s7(2).png)
+![Screenshot 8](screenshots/s7_2.png)
 
 ---
 
